@@ -22,6 +22,10 @@
 
 # Data
 
-  We wanted to explore the verbal structure and components found in job descriptions/requirements on job listings.  We explored a few apis from different job listing sites and settled on TheMuse.com'a api because it was one of the only ones that provided the full job description directly in the api instead of a truncated snippet.  
+  We wanted to explore the verbal structure and components found in job descriptions/requirements on job listings specifically for the data engineering field.  We explored a few apis from different job listing sites and settled on TheMuse.com'a api because it was one of the only ones that provided the full job description directly in the api instead of a truncated snippet.  
+  Although the api was the best for our needs it had a few downsides:
+    -The api didn't return as many listings as other sources
+    -When searching across a large area, hundreds of pages were returned but the api wouldn't allow us to access pages nubmered 100 or more
+    -When searching across a specific area, remote jobs from other parts of the world would be returned.  This would distort the data since we were primarily focused on job just in USA.
 
 
