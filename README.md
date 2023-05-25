@@ -17,9 +17,8 @@
 
 1. [Data](#data)
 2. [Extraction](#extraction)
-3. Cleaning
-4. Transforming
-5. Analyzing
+3. Cleaning/Transforming(#cleaning/transforming)
+4. Analyzing
 
 
 # Data
@@ -39,8 +38,14 @@
    2. The api didn't allow to search based on state or country, only specific cities.  And there were thousands and thousands of cities to pull data from.  We could specify a single city in the location parameter and repeat the process for each possible city but there were thousands of American cities so this would be a cumbersome process.
    3. When extracting results from a specific city, remote jobs from other parts of the world would be returned.  This would distort the data since we were primarily focused on job just in USA.  Additionally it returned a lot of redundant data.  For example, searching in just "Chicago, IL" returned 52 pages of results.  Meanwhile, performing the same search in "Aberdeen, SD" yielded 44 pages of results. Most of these results overlapped due to remote jobs appearing no matter the location specified.
 
-  To address these issues we came up with a few clever solutions.  First we scraped the api documentation to get a list of all the cities that are able to be passed as a parameter. Then, using regex, we eliminated the international cities (the american cities all had a state abbreviation after the comma), which resulted in a list of nearly 2400 cities.  
+  To address these issues we came up with a few clever solutions.  First we scraped the api documentation using the BeautifulSoup module to get a list of all the cities that are able to be passed as a parameter. Then, using regex, we eliminated the international cities (the american cities all had a state abbreviation after the comma), which resulted in a list of nearly 2400 cities.  
   
   We learned that we could pass in multiple locations into the locations parameter which reduced the amount of redundant results due to remote jobs appearing in every locations' results.  So we passed in 600 locations at a time which resulted in about 110-150 pages, depending on which 600 cities were passed in the parameters.  Since we couldn't access past page 100 we decided to look at the resulting pages in both ascending and descending order.  This allowed us to iterate through the pages from both ends and meet in the middle, encompassing all the results.  
   
   We saved each job listing to a Python dictionary using the listing id as a key.  Since dictionaries cant have duplicate keys this process removed any duplicate listings that may have appeared in the results.  We saved the dictionary to a json file so that we can easily load it for the transformation process. 
+
+# Cleaning/Transforming
+
+  First we dropped the uneccessary columns: type, model_type, short_name, and refs.
+  We changed each row's data in the locations column to be a list of the locations.  The levels column's data was changed to be just the "short_name" value (i.e. interniship, entry, mid, senior).  The company column's data was shortened to just the company's name.  The publican_date column was split into two columns, one with the date and one with the time.
+  We used the BeautifulSoup module to remove the html tags from the contents column's data and then we used regex to remove and newline (\n) or tab (\t) characters.  
