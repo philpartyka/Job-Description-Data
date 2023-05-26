@@ -17,7 +17,7 @@
 
 1. [Data](#data)
 2. [Extraction](#extraction)
-3. Cleaning/Transforming(#cleaning/transforming)
+3. [Transforming](#transforming)
 4. Analyzing
 
 
@@ -44,8 +44,10 @@
   
   We saved each job listing to a Python dictionary using the listing id as a key.  Since dictionaries cant have duplicate keys this process removed any duplicate listings that may have appeared in the results.  We saved the dictionary to a json file so that we can easily load it for the transformation process. 
 
-# Cleaning/Transforming
+# Transforming
 
   First we dropped the uneccessary columns: type, model_type, short_name, and refs.
+  
   We changed each row's data in the locations column to be a list of the locations.  The levels column's data was changed to be just the "short_name" value (i.e. interniship, entry, mid, senior).  The company column's data was shortened to just the company's name.  The publican_date column was split into two columns, one with the date and one with the time.
+  
   We used the BeautifulSoup module to remove the html tags from the contents column's data and then we used regex to remove and newline (\n) or tab (\t) characters.  
